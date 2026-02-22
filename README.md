@@ -77,3 +77,77 @@ Day 1: Core RAG pipeline working successfully.
 
 
 
+
+# Day 2 Progress – Structured Document-Based RAG
+
+On Day 2, I improved and structured the system further.
+
+Instead of only scraping websites, I added support for PDF documents. This makes the system more flexible.
+
+###  What I Completed on Day 2:
+
+### 1. PDF Processing
+- Uploaded a research journal PDF.
+- Used PyPDFLoader to extract text.
+- Verified number of pages loaded.
+
+### 2. Improved Chunking
+- Used RecursiveCharacterTextSplitter.
+- Added chunk overlap for better context continuity.
+- Generated clean text chunks.
+
+### 3. Updated Embedding Model
+- Switched to the latest Gemini embedding model:
+  `models/gemini-embedding-001`
+- Generated 3072-dimensional embeddings.
+- Converted them into NumPy float32 format for FAISS.
+
+### 4. FAISS Vector Index
+- Created FAISS IndexFlatL2.
+- Stored all document embeddings.
+- Implemented top-k semantic retrieval.
+
+### 5. Final RAG Pipeline
+- Embedded user query.
+- Retrieved top relevant chunks.
+- Constructed context.
+- Used `models/gemini-2.5-flash` for answer generation.
+- Ensured answers are strictly based on retrieved context.
+
+Now the system works for both:
+- Website content
+- PDF documents
+
+# Tech Stack Used
+
+- Python
+- Google Gemini API
+- FAISS
+- LangChain
+- BeautifulSoup
+- NumPy
+
+
+# How to Run
+
+1. Install dependencies:
+   pip install -r requirements.txt
+
+2. Set Gemini API key:
+   export GOOGLE_API_KEY="your_api_key"
+
+3. Run the notebook step by step.
+
+
+
+# Current Status
+
+Day 1: Website-based RAG working  
+Day 2: PDF-based structured RAG working  
+
+
+
+
+
+
+
