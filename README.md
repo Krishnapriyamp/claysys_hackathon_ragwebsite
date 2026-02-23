@@ -147,7 +147,90 @@ Day 2: PDF-based structured RAG working
 
 
 
+# Day 3 Progress – Hybrid RAG (Structured + Unstructured Data)
+
+## Overview
+
+On Day 3, I updated RAG system to handle both structured and unstructured data.
+
+Previously, the system could answer questions from Website content and PDF documents
+
+Now, it can also understand and answer questions from CSV files 
 
 
+## What I Implemented
+
+### 1. Added Structured Data Support
+
+- Loaded a real-world CSV dataset (Amazon dataset).
+- Used pandas to read and process tabular data.
+- Cleaned numeric columns (removed ₹, commas, percentage symbols).
+- Converted columns into proper numeric types (float / int).
+- Enabled the system to correctly process numerical fields like price, rating, accuracy, etc.
 
 
+### 2. Built Hybrid Architecture
+
+Instead of using one retrieval pipeline for everything, I created two separate paths:
+
+- Unstructured Retriever → For PDFs / Website text (FAISS + Embeddings)
+- Structured Retriever → For CSV / Table data (Pandas-based reasoning)
+
+This allows the system to choose the correct method based on the user query.
+
+
+### 3. Query Type Detection (Routing Logic)
+
+I implemented a rule-based query classification function that detects whether the question is:
+
+- Numerical / comparison-based → Structured
+- Explanation-based → Unstructured
+
+This enables intelligent query routing.
+
+### 4. Deterministic Numerical Reasoning
+
+For structured queries like:
+- Highest value
+- Lowest value
+- Greater than
+- Average
+
+Instead of using embeddings, I used direct pandas operations like:
+
+- idxmax()
+- idxmin()
+- mean()
+
+This ensures:
+- Exact numerical answers
+- No hallucination
+- Reduced unnecessary LLM usage
+
+
+## System Flow (Day 3)
+
+User Question  
+→ Detect query type  
+→ Route to structured or unstructured retriever  
+→ Retrieve relevant data  
+→ Generate final answer  
+
+Structured → Pandas reasoning  
+Unstructured → FAISS retrieval + Gemini generation  
+
+## Improvements Achieved
+
+- Hybrid RAG architecture
+- Intelligent query routing
+- Support for tabular data
+- Accurate numerical reasoning
+- Reduced unnecessary LLM dependency
+- Improved real-world usability
+
+
+## Current Project Status
+
+Day 1 → Website-based RAG  
+Day 2 → PDF-based RAG with FAISS  
+Day 3 → Hybrid RAG (Structured + Unstructured Data Support)
