@@ -234,3 +234,116 @@ Unstructured → FAISS retrieval + Gemini generation
 Day 1 → Website-based RAG  
 Day 2 → PDF-based RAG with FAISS  
 Day 3 → Hybrid RAG (Structured + Unstructured Data Support)
+
+
+
+# Day 4 Progress – Advanced Conversational RAG
+
+## Overview
+
+On Day 4, I upgraded my Hybrid RAG system to make it more reliable, efficient, and conversational.
+
+Earlier, the system could:
+- Handle website content
+- Handle PDFs
+- Handle structured CSV data
+- Route queries intelligently
+
+Now, I focused on improving retrieval quality, reliability, and adding memory support.
+
+
+
+## What I Implemented on Day 4
+
+### 1. Embedding Caching (Performance Improvement)
+
+- Generated embeddings once during document creation.
+- Stored them inside the `documents` object.
+- Reused them during re-ranking.
+
+This reduced repeated API calls and improved system efficiency.
+
+
+
+### 2. Cosine-Based Re-Ranking
+
+- After FAISS retrieval, computed cosine similarity.
+- Re-ranked chunks based on semantic similarity.
+- Selected top relevant chunks for answer generation.
+
+This improved contextual accuracy.
+
+
+
+### 3. Multi-Query Retrieval
+
+- Generated multiple rephrased versions of the user question.
+- Retrieved results for all variations.
+- Merged and removed duplicates.
+
+This improved recall and robustness to different question styles.
+
+
+
+### 4. Guardrail Filtering
+
+- Applied similarity threshold to remove weak chunks.
+- Reduced hallucination risk.
+- Improved answer grounding.
+
+
+
+### 5. Answer Verification
+
+- After generating the answer, asked the model to verify if it is fully supported by retrieved context.
+- Reduced confidence if verification failed.
+
+
+
+
+
+### 6. Improved Confidence Estimation
+
+Confidence is now based on:
+- Average cosine similarity
+- Number of supporting chunks
+- Verification result
+
+This produces a more realistic reliability score.
+
+
+
+### 7. Conversational Memory
+
+- Stored recent user questions and answers.
+- Injected conversation history into the prompt.
+- Enabled follow-up questions (e.g., “What are its applications?”).
+
+The system is now conversational instead of stateless.
+
+
+
+## System Flow (Day 4)
+
+User Question  
+→ Multi-query expansion  
+→ FAISS retrieval  
+→ Guardrail filtering  
+→ Cosine re-ranking  
+→ Add conversation memory  
+→ Generate answer  
+→ Verify answer  
+→ Compute confidence  
+→ Return answer + sources + confidence  
+
+
+
+## Current Project Status
+
+Day 1 → Website-based RAG  
+Day 2 → PDF-based RAG  
+Day 3 → Hybrid RAG (Structured + Unstructured)  
+Day 4 → Conversational, Verified, Multi-Query RAG System  
+
+
+
