@@ -345,5 +345,42 @@ Day 2 → PDF-based RAG
 Day 3 → Hybrid RAG (Structured + Unstructured)  
 Day 4 → Conversational, Verified, Multi-Query RAG System  
 
+# Day 5 Progress – fully structured chatbot without API keys
+ On Day 5, I migrated the entire RAG system from Google Colab to a fully structured local project in VS Code with separate backend and frontend integration. I successfully built a complete offline chatbot with Flask backend, FAISS vector storage, Ollama-based local LLM, and a responsive web UI running entirely on my local machine.
+# Local RAG Website Chatbot
+
+A lightweight,  Retrieval-Augmented Generation (RAG) chatbot capable of scraping websites and answering queries strictly based on the ingested content.
+
+## Key Features
+- **Offline Backend**: Built with Python & Flask. No external APIs used.
+- **Dynamic Web Scraping**: Extracts text from any given URL using `BeautifulSoup4`, stripping out navs, scripts, and styles.
+- **Smart Chunking**: Splits text into 500-word chunks with a 100-word overlap for better context retention.
+- **Local Embeddings**: Uses `sentence-transformers` (`all-MiniLM-L6-v2`) and a local `FAISS` vector store.
+- **Local LLM**: Connects to locally-running `Ollama` (default: `tinyllama` or `phi3:mini`) to safely generate answers.
+- **Safe Retrieval**: Responds with "Answer not found..." if context is missing from the scraped URL.
+- **Clean UI**: Modern HTML/CSS/JS frontend featuring chat processing states and session termination handling.
+
+## Installation
+1. Install requirements:
+   
+   pip install -r requirements.txt
+   
+2. Make sure Ollama is installed and running the selected model:
+   
+   ollama serve
+   ollama run tinyllama
+   
+
+## Usage
+1. Start the backend server:
+   
+   cd backend
+   python app.py
+   
+2. Open your browser and go to `http://localhost:5000`.
+3. Ingest a URL and ask questions!
+4. Type 'exit', 'stop', 'quit, or 'bye in the chat to securely close the session.
+
+
 
 
